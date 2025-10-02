@@ -91,55 +91,34 @@ graph TB
     classDef default fill:#fff,stroke:#333,stroke-width:2px;
 ```
 
-### Code Structure Example
+### System Architecture Overview
 
-```typescript
-// Domain Layer - Entity
-// src/domain/entities/coach.entity.ts
-export class Coach {
-    private readonly id: string;
-    private readonly specialization: string;
-    private readonly bio: string;
+```mermaid
+flowchart TB
+    Client[Client Applications] --> Gateway[API Gateway/Controllers]
+    Gateway --> Auth[Authentication/JWT]
+    Gateway --> Services[Domain Services]
+    Auth --> Services
+    Services --> Repos[Repositories]
+    Repos --> DB[(PostgreSQL Database)]
+    
+    subgraph Clean Architecture
+        Gateway --> |Request/Response| Services
+        Services --> |Domain Logic| Repos
+        Repos --> |Data Access| DB
+    end
 
-    constructor(props: CoachProps) {
-        this.id = props.id;
-        this.specialization = props.specialization;
-        this.bio = props.bio;
-    }
+    subgraph Security Layer
+        Auth --> |Validate Token| Services
+        Auth --> |Secure Routes| Gateway
+    end
 
-    // Domain logic and business rules
-    canCreateProgram(): boolean {
-        // Business validation
-        return true;
-    }
-}
-
-// Application Layer - Use Case
-// src/use-cases/coach.usecases.ts
-export class CreateCoachUseCase {
-    constructor(
-        private readonly coachRepository: ICoachRepository,
-    ) {}
-
-    async execute(data: CreateCoachDto): Promise<Coach> {
-        const coach = new Coach(data);
-        return this.coachRepository.save(coach);
-    }
-}
-
-// Infrastructure Layer - Controller
-// src/infrastructure/controllers/coach.controller.ts
-@Controller('coaches')
-export class CoachController {
-    constructor(
-        private readonly createCoachUseCase: CreateCoachUseCase,
-    ) {}
-
-    @Post()
-    async createCoach(@Body() data: CreateCoachDto) {
-        return this.createCoachUseCase.execute(data);
-    }
-}
+    style Client fill:#f9f,stroke:#333,stroke-width:2px
+    style Gateway fill:#bbf,stroke:#333,stroke-width:2px
+    style Auth fill:#fb7,stroke:#333,stroke-width:2px
+    style Services fill:#bfb,stroke:#333,stroke-width:2px
+    style Repos fill:#fbb,stroke:#333,stroke-width:2px
+    style DB fill:#fff,stroke:#333,stroke-width:2px
 ```
 
 ### Database Entity Relationship Diagram
@@ -208,35 +187,58 @@ erDiagram
     }
 ```
 
-### System Architecture Overview
+### Code Structure Example
 
-```mermaid
-flowchart TB
-    Client[Client Applications] --> Gateway[API Gateway/Controllers]
-    Gateway --> Auth[Authentication/JWT]
-    Gateway --> Services[Domain Services]
-    Auth --> Services
-    Services --> Repos[Repositories]
-    Repos --> DB[(PostgreSQL Database)]
-    
-    subgraph Clean Architecture
-        Gateway --> |Request/Response| Services
-        Services --> |Domain Logic| Repos
-        Repos --> |Data Access| DB
-    end
+```typescript
+// Domain Layer - Entity
+// src/domain/entities/coach.entity.ts
+export class Coach {
+    private readonly id: string;
+    private readonly specialization: string;
+    private readonly bio: string;
 
-    subgraph Security Layer
-        Auth --> |Validate Token| Services
-        Auth --> |Secure Routes| Gateway
-    end
+    constructor(props: CoachProps) {
+        this.id = props.id;
+        this.specialization = props.specialization;
+        this.bio = props.bio;
+    }
 
-    style Client fill:#f9f,stroke:#333,stroke-width:2px
-    style Gateway fill:#bbf,stroke:#333,stroke-width:2px
-    style Auth fill:#fb7,stroke:#333,stroke-width:2px
-    style Services fill:#bfb,stroke:#333,stroke-width:2px
-    style Repos fill:#fbb,stroke:#333,stroke-width:2px
-    style DB fill:#fff,stroke:#333,stroke-width:2px
+    // Domain logic and business rules
+    canCreateProgram(): boolean {
+        // Business validation
+        return true;
+    }
+}
+
+// Application Layer - Use Case
+// src/use-cases/coach.usecases.ts
+export class CreateCoachUseCase {
+    constructor(
+        private readonly coachRepository: ICoachRepository,
+    ) {}
+
+    async execute(data: CreateCoachDto): Promise<Coach> {
+        const coach = new Coach(data);
+        return this.coachRepository.save(coach);
+    }
+}
+
+// Infrastructure Layer - Controller
+// src/infrastructure/controllers/coach.controller.ts
+@Controller('coaches')
+export class CoachController {
+    constructor(
+        private readonly createCoachUseCase: CreateCoachUseCase,
+    ) {}
+
+    @Post()
+    async createCoach(@Body() data: CreateCoachDto) {
+        return this.createCoachUseCase.execute(data);
+    }
+}
 ```
+
+
 
 ## 🛠️ Technology Stack
 
