@@ -1,0 +1,14 @@
+version: '3'
+
+name: my_coach_database_only
+
+services:
+  db:
+    image: postgres
+    container_name: my-coach-postgres-database
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=root
+      - POSTGRES_DB=my-coach-db
+    ports:
+      - 5432:5432
