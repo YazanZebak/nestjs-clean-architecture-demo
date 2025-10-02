@@ -1,33 +1,86 @@
 
-# My Coach Backend
+# NestJS Clean Architecture Demo 🏗️
 
-This is the backend API for the My Coach platform, built with NestJS. It provides endpoints and business logic for managing coaches, players, gyms, memberships, programs, diets, enrollments, and more. The project follows clean architecture principles and is containerized with Docker for easy deployment.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![NestJS](https://img.shields.io/badge/NestJS-8.x-red.svg)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.x-blue.svg)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-20.x-blue.svg)](https://www.docker.com/)
 
-## Features
+A production-ready backend application demonstrating Clean Architecture principles in NestJS. This project showcases how to build scalable, maintainable, and testable applications using Domain-Driven Design (DDD) and SOLID principles.
 
-- Modular domain-driven design
-- RESTful API endpoints for all core entities (Account, Coach, Player, Gym, etc.)
-- Authentication and authorization (JWT, bcrypt)
-- Database configuration via environment variables
-- Docker support for local and production environments
-- Extensible infrastructure for services, repositories, and controllers
+<p align="center">
+  <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" />
+</p>
 
-## Tech Stack
+## 🎯 Project Overview
 
-- NestJS (TypeScript)
+This project implements a coaching platform backend that demonstrates:
+
+- **Clean Architecture** implementation in NestJS
+- **Domain-Driven Design** (DDD) principles
+- **SOLID** principles application
+- **Enterprise-grade** project structure
+- **Production-ready** configurations
+- **Docker** containerization
+- **Comprehensive testing** setup
+
+## 🌟 Key Features
+
+### Architecture & Design
+- Clean Architecture with clear separation of concerns
+- Domain-driven design with rich domain models
+- Use-case driven development
+- Repository pattern implementation
+- SOLID principles adherence
+
+### Technical Implementation
+- Advanced authentication & authorization (JWT)
+- Comprehensive error handling
+- Environment-based configurations
+- Swagger API documentation
+- Database migrations
+- Logging & monitoring setup
+
+### Core Domain Features
+- Comprehensive user management (Coaches, Players)
+- Program & Training management
+- Diet & Exercise tracking
+- Membership & Enrollment system
+- Rating & Feedback system
+- Media handling
+- Transaction processing
+
+## 🛠️ Technology Stack
+
+### Core
+- **[NestJS](https://nestjs.com/)** - Progressive Node.js framework
+- **[TypeScript](https://www.typescriptlang.org/)** - Static typing and ECMAScript features
+- **[PostgreSQL](https://www.postgresql.org/)** - Primary database
+
+### Infrastructure
+- **[Docker](https://www.docker.com/)** - Containerization
+- **[Docker Compose](https://docs.docker.com/compose/)** - Multi-container orchestration
+
+### Security
+- **[JWT](https://jwt.io/)** - Authentication & Authorization
+- **[bcrypt](https://github.com/kelektiv/node.bcrypt.js)** - Password hashing
+
+### Development & Testing
+- **[Jest](https://jestjs.io/)** - Testing framework
+- **[ESLint](https://eslint.org/)** - Code quality
+- **[Prettier](https://prettier.io/)** - Code formatting
+
+## 📦 Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (v16 or higher)
+- npm (v7 or higher) or Yarn
 - Docker & Docker Compose
-- PostgreSQL (default, configurable)
-- JWT & bcrypt for authentication
+- PostgreSQL (if running locally)
 
-## Getting Started
+## 🚀 Getting Started
 
-### Prerequisites
-
-- Node.js (v16+ recommended)
-- Yarn or npm
-- Docker & Docker Compose (for containerized setup)
-
-### Local Development
+### Local Development Setup
 
 1. Install dependencies:
    ```bash
@@ -59,38 +112,71 @@ yarn test:e2e
 npm run test:e2e
 ```
 
-## Folder Structure
+## 📁 Project Structure
+
+The project follows Clean Architecture principles with a clear separation of concerns:
 
 ```
 src/
-  domain/         # Core domain entities, interfaces, adapters
-  infrastructure/ # Controllers, services, repositories, configuration
-  use-cases/      # Application use cases
-  app.module.ts   # Main NestJS module
-  main.ts         # Entry point
-env/              # Environment variable files
-public/           # Static files
-test/             # End-to-end tests
-docker-compose.yml
+├── domain/                 # Enterprise business rules
+│   ├── entities/          # Enterprise business entities
+│   ├── repositories/      # Repository interfaces
+│   ├── adapters/         # Interface adapters
+│   └── models/           # Domain models & value objects
+├── infrastructure/        # Frameworks & tools
+│   ├── common/           # Shared utilities
+│   ├── config/           # Configuration
+│   ├── controllers/      # REST API controllers
+│   ├── repositories/     # Repository implementations
+│   └── services/         # External service implementations
+├── use-cases/            # Application business rules
+├── app.module.ts         # Main application module
+└── main.ts              # Application entry point
 ```
 
-## Environment Variables
+## ⚙️ Environment Configuration
 
-Configure your environment variables in `env/local.env`. Example:
+Configure your environment in `env/local.env`:
 
-```
+```bash
+# Database Configuration
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=youruser
 DB_PASS=yourpass
 DB_NAME=mycoach
+
+# JWT Configuration
 JWT_SECRET=your_jwt_secret
+JWT_EXPIRATION=3600
+
+# Server Configuration
+PORT=3000
+NODE_ENV=development
 ```
 
-## API Documentation
+## 📚 API Documentation
 
-API endpoints are organized by entity (e.g., `/account`, `/coach`, `/gym`, etc.). See controller files in `src/infrastructure/controllers/` for details.
+The API documentation is available through Swagger UI at `/api/docs` when running the application. The endpoints are organized by domain entities:
 
-## License
+- `/api/v1/accounts` - Account management
+- `/api/v1/coaches` - Coach profiles and management
+- `/api/v1/players` - Player profiles and management
+- `/api/v1/programs` - Training programs
+- `/api/v1/memberships` - Membership management
+- `/api/v1/enrollments` - Program enrollments
+- `/api/v1/diets` - Diet plans
+- `/api/v1/exercises` - Exercise library
+- `/api/v1/trainings` - Training sessions
 
-This project is licensed under the MIT License.
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙋‍♂️ Author
+
+Created by [Yazan Zebak](https://github.com/YazanZebak)
