@@ -52,6 +52,96 @@ This project implements a coaching platform backend that demonstrates:
 
 ## System Architecture
 
+### Clean Architecture Layers
+
+```mermaid
+graph TB
+    subgraph External["External Layer (Infrastructure)"]
+        C[Controllers]
+        R[Repositories Impl]
+        S[Services]
+        D[(Database)]
+        style C fill:#e1bee7,stroke:#333
+        style R fill:#e1bee7,stroke:#333
+        style S fill:#e1bee7,stroke:#333
+        style D fill:#e1bee7,stroke:#333
+    end
+
+    subgraph Application["Application Layer (Use Cases)"]
+        UC[Use Cases]
+        style UC fill:#bbdefb,stroke:#333
+    end
+
+    subgraph Domain["Domain Layer (Core)"]
+        E[Entities]
+        I[Interfaces]
+        V[Value Objects]
+        style E fill:#c8e6c9,stroke:#333
+        style I fill:#c8e6c9,stroke:#333
+        style V fill:#c8e6c9,stroke:#333
+    end
+
+    C --> UC
+    UC --> E
+    UC --> I
+    R --> I
+    S --> UC
+    R --> D
+
+    classDef default fill:#fff,stroke:#333,stroke-width:2px;
+```
+
+### Code Structure Example
+
+```typescript
+// Domain Layer - Entity
+// src/domain/entities/coach.entity.ts
+export class Coach {
+    private readonly id: string;
+    private readonly specialization: string;
+    private readonly bio: string;
+
+    constructor(props: CoachProps) {
+        this.id = props.id;
+        this.specialization = props.specialization;
+        this.bio = props.bio;
+    }
+
+    // Domain logic and business rules
+    canCreateProgram(): boolean {
+        // Business validation
+        return true;
+    }
+}
+
+// Application Layer - Use Case
+// src/use-cases/coach.usecases.ts
+export class CreateCoachUseCase {
+    constructor(
+        private readonly coachRepository: ICoachRepository,
+    ) {}
+
+    async execute(data: CreateCoachDto): Promise<Coach> {
+        const coach = new Coach(data);
+        return this.coachRepository.save(coach);
+    }
+}
+
+// Infrastructure Layer - Controller
+// src/infrastructure/controllers/coach.controller.ts
+@Controller('coaches')
+export class CoachController {
+    constructor(
+        private readonly createCoachUseCase: CreateCoachUseCase,
+    ) {}
+
+    @Post()
+    async createCoach(@Body() data: CreateCoachDto) {
+        return this.createCoachUseCase.execute(data);
+    }
+}
+```
+
 ### Database Entity Relationship Diagram
 
 ```mermaid
