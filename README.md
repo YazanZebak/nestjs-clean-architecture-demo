@@ -61,24 +61,24 @@ graph TB
         R[Repositories Impl]
         S[Services]
         D[(Database)]
-        style C fill:#e1bee7,stroke:#333
-        style R fill:#e1bee7,stroke:#333
-        style S fill:#e1bee7,stroke:#333
-        style D fill:#e1bee7,stroke:#333
+        style C fill:#6b4c79,stroke:#333,color:#fff
+        style R fill:#6b4c79,stroke:#333,color:#fff
+        style S fill:#6b4c79,stroke:#333,color:#fff
+        style D fill:#6b4c79,stroke:#333,color:#fff
     end
 
     subgraph Application["Application Layer (Use Cases)"]
         UC[Use Cases]
-        style UC fill:#bbdefb,stroke:#333
+        style UC fill:#1565c0,stroke:#333,color:#fff
     end
 
     subgraph Domain["Domain Layer (Core)"]
         E[Entities]
         I[Interfaces]
         V[Value Objects]
-        style E fill:#c8e6c9,stroke:#333
-        style I fill:#c8e6c9,stroke:#333
-        style V fill:#c8e6c9,stroke:#333
+        style E fill:#2e7d32,stroke:#333,color:#fff
+        style I fill:#2e7d32,stroke:#333,color:#fff
+        style V fill:#2e7d32,stroke:#333,color:#fff
     end
 
     C --> UC
@@ -89,6 +89,9 @@ graph TB
     R --> D
 
     classDef default fill:#fff,stroke:#333,stroke-width:2px;
+    style External fill:#f8f9fa,stroke:#333,color:#000
+    style Application fill:#f8f9fa,stroke:#333,color:#000
+    style Domain fill:#f8f9fa,stroke:#333,color:#000
 ```
 
 ### System Architecture Overview
@@ -113,12 +116,12 @@ flowchart TB
         Auth --> |Secure Routes| Gateway
     end
 
-    style Client fill:#f9f,stroke:#333,stroke-width:2px
-    style Gateway fill:#bbf,stroke:#333,stroke-width:2px
-    style Auth fill:#fb7,stroke:#333,stroke-width:2px
-    style Services fill:#bfb,stroke:#333,stroke-width:2px
-    style Repos fill:#fbb,stroke:#333,stroke-width:2px
-    style DB fill:#fff,stroke:#333,stroke-width:2px
+    style Client fill:#6b4c79,stroke:#333,stroke-width:2px,color:#fff
+    style Gateway fill:#1565c0,stroke:#333,stroke-width:2px,color:#fff
+    style Auth fill:#d32f2f,stroke:#333,stroke-width:2px,color:#fff
+    style Services fill:#2e7d32,stroke:#333,stroke-width:2px,color:#fff
+    style Repos fill:#795548,stroke:#333,stroke-width:2px,color:#fff
+    style DB fill:#000000,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Database Entity Relationship Diagram
