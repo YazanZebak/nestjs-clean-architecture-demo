@@ -50,6 +50,104 @@ This project implements a coaching platform backend that demonstrates:
 - Media handling
 - Transaction processing
 
+## System Architecture
+
+### Database Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    Account ||--o| Coach : has
+    Account ||--o| Player : has
+    Coach ||--|{ Program : creates
+    Coach ||--|{ Gym : owns
+    Player ||--|{ Enrollment : has
+    Player ||--|{ Membership : has
+    Player ||--|{ Diet : follows
+    Player ||--|{ Training : performs
+    Program ||--|{ Exercise : contains
+    Program ||--|{ Enrollment : has
+    Exercise ||--|{ Training : included_in
+    Player ||--|{ Rating : gives
+    Coach ||--|{ Rating : receives
+    Player ||--|{ Transaction : makes
+    Gym ||--|{ Membership : offers
+
+    Account {
+        uuid id PK
+        string username
+        string email
+        string password
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    Coach {
+        uuid id PK
+        uuid account_id FK
+        string specialization
+        string bio
+    }
+
+    Player {
+        uuid id PK
+        uuid account_id FK
+        integer age
+        string gender
+    }
+
+    Program {
+        uuid id PK
+        uuid coach_id FK
+        string title
+        string description
+    }
+
+    Exercise {
+        uuid id PK
+        uuid program_id FK
+        string name
+        integer duration
+    }
+
+    Training {
+        uuid id PK
+        uuid player_id FK
+        uuid exercise_id FK
+        date date
+        string feedback
+    }
+```
+
+### System Architecture Overview
+
+```mermaid
+flowchart TB
+    Client[Client Applications] --> Gateway[API Gateway/Controllers]
+    Gateway --> Auth[Authentication/JWT]
+    Gateway --> Services[Domain Services]
+    Auth --> Services
+    Services --> Repos[Repositories]
+    Repos --> DB[(PostgreSQL Database)]
+    
+    subgraph Clean Architecture
+        Gateway --> |Request/Response| Services
+        Services --> |Domain Logic| Repos
+        Repos --> |Data Access| DB
+    end
+
+    subgraph Security Layer
+        Auth --> |Validate Token| Services
+        Auth --> |Secure Routes| Gateway
+    end
+
+    style Client fill:#f9f,stroke:#333,stroke-width:2px
+    style Gateway fill:#bbf,stroke:#333,stroke-width:2px
+    style Auth fill:#fb7,stroke:#333,stroke-width:2px
+    style Services fill:#bfb,stroke:#333,stroke-width:2px
+    style Repos fill:#fbb,stroke:#333,stroke-width:2px
+    style DB fill:#fff,stroke:#333,stroke-width:2px
+```
+
 ## 🛠️ Technology Stack
 
 ### Core
